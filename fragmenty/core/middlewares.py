@@ -2,7 +2,7 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-
+import random
 from scrapy import signals
 
 # useful for handling different item types with a single interface
@@ -101,3 +101,15 @@ class CoreDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
+
+
+class ProxyMiddleware:
+    def __init__(self, proxies):
+        self.proxies = proxies
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(proxies=crawler.settings.getlist('HTTP_PROXY_LIST'))
+
+    def process_request(self, request, spider):
+        request.meta['proxy'] = random.choice(self.proxies)
