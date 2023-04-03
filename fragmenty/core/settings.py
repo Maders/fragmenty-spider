@@ -1,3 +1,7 @@
+import logging
+
+LOG_LEVEL = logging.INFO
+
 # Scrapy settings for core project
 #
 # For simplicity, this file contains only settings considered important or
