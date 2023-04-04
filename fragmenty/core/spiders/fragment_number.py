@@ -24,6 +24,19 @@ def extract_minimum_bid_in_usd(row):
 
 
 def memorability_score(number):
+    # Ignore the first three characters (the three 8s)
+    number = number[3:]
+
+    # Define weights for each pattern type
+    repeated_patterns_weight = 2
+    sequence_patterns_weight = 1
+    alternating_patterns_weight = 2
+    palindrome_patterns_weight = 1
+    repeated_8s_weight = 1
+
+    total_weight = max(repeated_patterns_weight, sequence_patterns_weight,
+                       alternating_patterns_weight, palindrome_patterns_weight, repeated_8s_weight)
+
     # Check for repeated patterns (e.g., 1111, 2222, 3333)
     repeated_patterns = sum(len(match)
                             for match in re.findall(r'(\d)\1{2,}', number))
@@ -32,12 +45,27 @@ def memorability_score(number):
     sequence_patterns = 0
     for i in range(len(number) - 3):
         if number[i:i+4] in '0123456789012' or number[i:i+4] in '9876543210987':
-            sequence_patterns += len(number[i:i+4])
+            sequence_patterns += 1  # len(number[i:i+4])
 
-    total_patterns = repeated_patterns + sequence_patterns
+    # Check for alternating patterns (e.g., 1212, 2323, 3434)
+    alternating_patterns = sum(len(match)
+                               for match in re.findall(r'(\d\d)\1{1,}', number))
+
+    # Check for palindromes (e.g., 12321, 3443)
+    palindrome_patterns = sum(1 for i in range(len(number) // 2)
+                              if number[i] == number[-(i + 1)])
+
+    # Check for repeated 8s after the first three characters
+    repeated_8s = sum(len(match) for match in re.findall(r'(8)\1{2,}', number))
+
+    total_patterns_score = (repeated_patterns * repeated_patterns_weight +
+                            sequence_patterns * sequence_patterns_weight +
+                            alternating_patterns * alternating_patterns_weight +
+                            palindrome_patterns * palindrome_patterns_weight +
+                            repeated_8s * repeated_8s_weight)
 
     # Normalize the score to a range of 0 to 1
-    score = total_patterns / len(number)
+    score = total_patterns_score / (len(number) * total_weight)
 
     return min(score, 1)
 
@@ -67,5 +95,5 @@ class FragmentNumberSpider(scrapy.Spider):
             item['minimumBid'] = extract_minimum_bid(row)
             item['minimumBidInUSD'] = extract_minimum_bid_in_usd(row)
             item['auctionEndTimestamp'] = auctionEndTimestamp
-            item['memorabilityScore'] = memorability_score(item["id"])
+            item['memorabilityScore'] = memorability_score(extract_id(row))
             yield item
