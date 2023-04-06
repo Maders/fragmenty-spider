@@ -98,9 +98,7 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 
-HTTP_PROXY_LIST = [
-    'http://127.0.0.1:7890'
-]
+HTTP_PROXY_LIST = []
 
 # MongoDB settings
 # Replace with your MongoDB connection URI if different
