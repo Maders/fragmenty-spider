@@ -106,6 +106,6 @@ HTTP_PROXY_LIST = []
 
 # MongoDB settings
 # Replace with your MongoDB connection URI if different
-MONGO_URI = os.environ.get('MONGO_URI')
+MONGO_URI = os.environ.get('MONGO_URI', 'mongodb://localhost:27017')
 # Replace with your desired database name
-MONGO_DATABASE = os.environ.get('MONGO_DATABASE')
+MONGO_DATABASE = os.environ.get('MONGO_DATABASE', 'fragmenty')
