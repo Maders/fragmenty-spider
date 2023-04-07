@@ -112,4 +112,5 @@ class ProxyMiddleware:
         return cls(proxies=crawler.settings.getlist('HTTP_PROXY_LIST'))
 
     def process_request(self, request, spider):
-        request.meta['proxy'] = random.choice(self.proxies)
+        if self.proxies:
+            request.meta['proxy'] = random.choice(self.proxies)

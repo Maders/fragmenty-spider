@@ -1,5 +1,9 @@
 import logging
+import os
+from dotenv import load_dotenv
 
+
+load_dotenv()
 LOG_LEVEL = logging.INFO
 
 # Scrapy settings for core project
@@ -102,5 +106,6 @@ HTTP_PROXY_LIST = []
 
 # MongoDB settings
 # Replace with your MongoDB connection URI if different
-MONGO_URI = 'mongodb://localhost:27017'
-MONGO_DATABASE = 'fragmenty'  # Replace with your desired database name
+MONGO_URI = os.environ.get('MONGO_URI')
+# Replace with your desired database name
+MONGO_DATABASE = os.environ.get('MONGO_DATABASE')
