@@ -39,6 +39,7 @@ jobs:
         with:
           context: .
           platforms: linux/amd64
+          provenance: false
           push: true
           tags: ${{ vars.ECR_REPOSITORY_URI }}:spider-${{ github.ref_name }}
           # because first letter of my username is in uppercase it can't use ${{ github.repository }} context
