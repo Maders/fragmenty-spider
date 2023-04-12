@@ -61,7 +61,7 @@ This Docker Compose file sets up the MongoDB database that the Fragmenty Scrapy 
 
 ## HTTP Proxy
 
-If you want to use a list of HTTP proxies with the Scrapy project, you can fill the `HTTP_PROXY_LIST` in the `fragmenty/core/settings.py` file. The project includes a custom pipeline that randomly selects a proxy from the list for each request. If you don't want to use a proxy, you can leave the `HTTP_PROXY_LIST` empty. The pipeline will simply skip the proxy selection step.
+If you want to use a list of HTTP proxies with the Scrapy project, you can fill the `HTTP_PROXY_LIST` in the `fragmenty/core/settings.py` file. The project includes a custom middleware that randomly selects a proxy from the list for each request. If you don't want to use a proxy, you can leave the `HTTP_PROXY_LIST` empty. The middleware will simply skip the proxy selection step.
 
 ## Related Project:
 
