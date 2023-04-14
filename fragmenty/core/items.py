@@ -6,7 +6,10 @@
 import scrapy
 
 
-class CoreItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class FragmentItem(scrapy.Item):
+    id = scrapy.Field()
+    number = scrapy.Field()
+    minimumBid = scrapy.Field()
+    minimumBidInUSD = scrapy.Field()
+    auctionEndTimestamp = scrapy.Field()
+    memorabilityScore = scrapy.Field()
